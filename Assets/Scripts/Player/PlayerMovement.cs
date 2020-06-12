@@ -78,4 +78,7 @@ public class PlayerMovement : MonoBehaviour
         handleInputs();
         updatePosition();
     }
+
+
+    // Update is called once per frame
 }

@@ -22,11 +22,11 @@ public class PlayerGettingShot : MonoBehaviour
      void OnTriggerEnter(Collider other)
     {
 
-        if (other.tag == "Boundry")
+        if (other.tag.Equals("Boundry"))
         {
             return;
         }
-        if (other.tag == "EnemyProjectile")
+        if (other.tag.Equals("EnemyProjectile"))
         {
             levelManager.GameOver();
         }

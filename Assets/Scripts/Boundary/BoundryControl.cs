@@ -25,7 +25,6 @@ public class BoundryControl : MonoBehaviour
     }
     void Update()
     {
-
         Collider[] colliders = Physics.OverlapBox
         (
             gameObject.transform.position,
@@ -34,7 +33,7 @@ public class BoundryControl : MonoBehaviour
         );
         if (colliders.Length == 2)
         {
-            if (colliders[0].gameObject.tag == "Player" || colliders[1].gameObject.tag == "Player")
+            if (colliders[0].gameObject.tag.Equals("Player") || colliders[1].gameObject.tag.Equals("Player"))
             { levelManager.FinishedLevel(); }
         }
     }

@@ -6,18 +6,33 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
+
     static private int level = 1;
     private bool restart;
     private bool isGameOver;
     private bool isLevelFinished;
-    public string restartMessage = "press 'f' to pay respects... i mean to restart";
-    public string nextLevelMessage = "press 'x' to doubt.. i mean to go to the next level";
-    public string gameOverMessage = "game over!";
-    public string congratulateMessage="level passed!";
+    public string restartMessage;
+    public string nextLevelMessage;
+    public string gameOverMessage;
+    public string congratulateMessage;
     public Text restartUI;
     public Text gameStatusUI;
     public Text nextLevelUI;
+    public AudioClip gameOverSound;
+    public AudioClip nextLevelSound;
 
+
+    void PlayGameOverSound()
+    {
+        GetComponent<AudioSource>().Stop();
+        GetComponent<AudioSource>().PlayOneShot(gameOverSound);
+        
+    }
+    void PlayNextLevelSound()
+    {
+        GetComponent<AudioSource>().Stop();
+        GetComponent<AudioSource>().PlayOneShot(nextLevelSound);
+    }
     void Start()
     {
         restartUI.text = "";
@@ -25,7 +40,7 @@ public class LevelManager : MonoBehaviour
         nextLevelUI.text = "";
         GetComponent<LevelCreator>().CreateLevel(level);
     }
-   
+
     // Update is called once per frame
     void Update()
     {
@@ -47,16 +62,18 @@ public class LevelManager : MonoBehaviour
 
     }
 
-     public void FinishedLevel()
+    public void FinishedLevel()
     {
-        nextLevelUI.text=nextLevelMessage;
-        gameStatusUI.text=congratulateMessage;
-        isLevelFinished=true;
+        nextLevelUI.text = nextLevelMessage;
+        gameStatusUI.text = congratulateMessage;
+        isLevelFinished = true;
+        PlayNextLevelSound();
     }
     public void GameOver()
     {
         gameStatusUI.text = gameOverMessage;
         isGameOver = true;
+        PlayGameOverSound();
     }
 
 

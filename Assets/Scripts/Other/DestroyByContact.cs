@@ -20,7 +20,7 @@ public class DestroyByContact : MonoBehaviour
         {
             Debug.Log("Cannot find 'GameController' script.");
         }
-         if (scoreKeeper == null)
+        if (scoreKeeper == null)
         {
             Debug.Log("Cannot find 'ScoreKeeper' script.");
         }
@@ -28,19 +28,23 @@ public class DestroyByContact : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-
-        if (other.tag == "Boundry")
+        if (other.tag.Equals(gameObject.tag) && gameObject.tag.Equals("Enemy"))
         {
             return;
         }
-        if (other.tag == "Player")
+        if (other.tag.Equals("Boundry"))
+        {
+            return;
+        }
+        if (other.tag.Equals("Player"))
         {
             levelManager.GameOver();
         }
-        if (other.tag == "PlayerProjectile")
+        if (other.tag.Equals("PlayerProjectile"))
         {
             scoreKeeper.AddScore(scoreValue);
         }
+
 
         Instantiate(explosion, transform.position, transform.rotation);
         Destroy(other.gameObject);
