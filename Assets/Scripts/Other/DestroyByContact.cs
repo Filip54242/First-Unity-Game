@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class DestroyByContact : MonoBehaviour
 {
-    public GameObject explosion;
+    public GameObject objectExplosion;
+    public GameObject playerExplosion;
+
     public int scoreValue;
     private LevelManager levelManager;
     private ScoreKeeper scoreKeeper;
@@ -46,7 +48,7 @@ public class DestroyByContact : MonoBehaviour
         }
 
 
-        Instantiate(explosion, transform.position, transform.rotation);
+        Instantiate(objectExplosion, transform.position, transform.rotation);
         Destroy(other.gameObject);
         Destroy(gameObject);
 
