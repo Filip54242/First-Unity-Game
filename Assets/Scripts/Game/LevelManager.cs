@@ -20,24 +20,26 @@ public class LevelManager : MonoBehaviour
     public Text nextLevelUI;
     public AudioClip gameOverSound;
     public AudioClip nextLevelSound;
+    public AudioSource audioSource;
 
 
     void PlayGameOverSound()
     {
-        GetComponent<AudioSource>().Stop();
-        GetComponent<AudioSource>().PlayOneShot(gameOverSound);
-        
+        audioSource.Stop();
+        audioSource.PlayOneShot(gameOverSound);
+
     }
     void PlayNextLevelSound()
     {
-        GetComponent<AudioSource>().Stop();
-        GetComponent<AudioSource>().PlayOneShot(nextLevelSound);
+        audioSource.Stop();
+        audioSource.PlayOneShot(nextLevelSound);
     }
     void Start()
     {
         restartUI.text = "";
         gameStatusUI.text = "";
         nextLevelUI.text = "";
+        audioSource = GetComponent<AudioSource>();
         GetComponent<LevelCreator>().CreateLevel(level);
     }
 
@@ -74,6 +76,7 @@ public class LevelManager : MonoBehaviour
         gameStatusUI.text = gameOverMessage;
         isGameOver = true;
         PlayGameOverSound();
+        GetComponent<ScoreKeeper>().SetScoreToZero();
     }
 
 

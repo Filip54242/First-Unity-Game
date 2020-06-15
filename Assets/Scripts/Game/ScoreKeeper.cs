@@ -6,10 +6,9 @@ using UnityEngine.UI;
 public class ScoreKeeper : MonoBehaviour
 {
     public Text scoreUI;
-    private int score;
+    static private int score = 0;
     void Start()
     {
-        score = 0;
         UpdateScore();
     }
     void UpdateScore()
@@ -20,5 +19,9 @@ public class ScoreKeeper : MonoBehaviour
     {
         score += value;
         UpdateScore();
+    }
+    public void SetScoreToZero()
+    {
+        score = 0;
     }
 }
