@@ -17,6 +17,17 @@ public class PlayerMovement : MonoBehaviour
     public float decelerationFactor = 150.0f;
     public float cruisingSpeed = 5.0f;
     public float rotationSpeed = 2.0f;
+    float pitch = 0;
+
+    Vector3 GetNormalizedMousePosition()
+    {
+        Vector2 mousePos = Input.mousePosition;
+
+        return new Vector3(
+            (mousePos.x * (boundary.xMax - boundary.xMin)) / Screen.width + boundary.xMin,
+            0.0f, (mousePos.y * (boundary.zMax - boundary.zMin)) / Screen.height + boundary.zMin);
+
+    }
 
     void decreaseCurrentSpeed()
     {
@@ -30,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
             currentSpeed = 0.0f;
         }
     }
-    void handleInputs()
+    void HandleInputs()
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
@@ -40,7 +51,6 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.Rotate(rotationSpeed, 0.0f, 0.0f);
         }
-
         if (Input.GetKey(KeyCode.UpArrow))
         {
             currentSpeed = cruisingSpeed;
@@ -50,17 +60,20 @@ public class PlayerMovement : MonoBehaviour
             currentSpeed = 0;
         }
     }
-    void updatePosition()
+    void UpdatePosition()
     {
 
         decreaseCurrentSpeed();
+        Vector3 mousePosition = GetNormalizedMousePosition();
+        if (Vector3.Distance(mousePosition, transform.position) < 0.5) currentSpeed = 0;
+        transform.LookAt(mousePosition);
         horisontalRotation = transform.rotation.eulerAngles.y;
 
         movement = new Vector3
         (
-        -currentSpeed * Mathf.Cos(Mathf.Deg2Rad * horisontalRotation),
+        -currentSpeed * Mathf.Cos(Mathf.Deg2Rad * horisontalRotation + 90),
         0.0f,
-        currentSpeed * Mathf.Sin(Mathf.Deg2Rad * horisontalRotation)
+        currentSpeed * Mathf.Sin(Mathf.Deg2Rad * horisontalRotation + 90)
         );
         GetComponent<Rigidbody>().velocity = movement;
 
@@ -72,13 +85,11 @@ public class PlayerMovement : MonoBehaviour
         );
     }
 
-    // Update is called once per frame
     void Update()
     {
-        handleInputs();
-        updatePosition();
+
+        HandleInputs();
+        UpdatePosition();
+
     }
-
-
-    // Update is called once per frame
 }

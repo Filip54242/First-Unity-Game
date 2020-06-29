@@ -10,7 +10,7 @@ public class PlayerShooting : MonoBehaviour
     public Transform[] shotSpawns;
     void handleInputs()
     {
-        if (Input.GetKey(KeyCode.Space) && Time.time > nextFire)
+        if (Input.GetKey(KeyCode.Mouse0) && Time.time > nextFire)
         {
             nextFire = Time.time + 1 / fireRate;
             foreach (var shotSpawn in shotSpawns)
